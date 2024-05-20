@@ -501,7 +501,9 @@ void splice(NSMutableArray *input, NSUInteger start, NSUInteger count, NSArray *
     Operation op = (text1.length > text2.length) ? DIFF_DELETE : DIFF_INSERT;
     [diffs addObject:[Diff diffWithOperation:op andText:[longtext substringWithRange:NSMakeRange(0, i)]]];
     [diffs addObject:[Diff diffWithOperation:DIFF_EQUAL andText:shorttext]];
-    [diffs addObject:[Diff diffWithOperation:op andText:[longtext substringFromIndex:(i + shorttext.length)]]];
+    if (i + shorttext.length <= longtext.length) {
+      [diffs addObject:[Diff diffWithOperation:op andText:[longtext substringFromIndex:(i + shorttext.length)]]];
+    }
     return diffs;
   }
 
